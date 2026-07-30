@@ -9,8 +9,11 @@ import Work from './components/sections/Work';
 import Playground from './components/sections/Playground';
 import Contact from './components/sections/Contact';
 import Footer from './components/Footer';
+import Cursor from './components/Cursor';
+import DepthGauge from './components/DepthGauge';
 import { useAmbience } from './hooks/useAmbience';
 import { SMOOTH_CONTENT_ID, useSmoothScroll } from './hooks/useSmoothScroll';
+import { useDepthScroll } from './hooks/useDepthScroll';
 import { initEasterEggs } from './lib/easterEggs';
 
 export default function App() {
@@ -18,13 +21,16 @@ export default function App() {
   const { enabled: soundEnabled, toggle: toggleSound } = useAmbience();
 
   useSmoothScroll();
+  useDepthScroll();
   useEffect(() => initEasterEggs(), []);
 
   return (
     <>
       {/* Bewusst außerhalb von #smooth-content: dessen Transform würde sonst
           zum Bezugsrahmen für alles Fixierte und die Navigation mitscrollen. */}
+      <Cursor />
       <SideNav soundEnabled={soundEnabled} onToggleSound={toggleSound} />
+      <DepthGauge />
       <MobileBar
         onOpenMenu={() => setMenuOpen(true)}
         soundEnabled={soundEnabled}

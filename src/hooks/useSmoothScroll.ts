@@ -4,10 +4,6 @@ import { useEffect } from 'react';
 const EASE = 0.075;
 /** Darunter gilt die Bewegung als angekommen. */
 const SNAP = 0.06;
-/** Wie stark die Scrollgeschwindigkeit den Inhalt schert (Grad pro Pixel). */
-const SKEW_PER_PIXEL = 0.035;
-/** Deckel, sonst kippt die Seite bei einem Sprung komplett weg. */
-const SKEW_MAX = 2.4;
 
 export const SMOOTH_CONTENT_ID = 'smooth-content';
 
@@ -50,22 +46,15 @@ export function useSmoothScroll() {
     const resizeObserver = new ResizeObserver(syncHeight);
     resizeObserver.observe(content);
 
-    let skew = 0;
-
     const tick = () => {
       const target = window.scrollY;
       const delta = target - current;
       current += delta * EASE;
       if (Math.abs(delta) < SNAP) current = target;
 
-      // Der Rückstand zur echten Scrollposition ist die gefühlte
-      // Geschwindigkeit — daraus wird eine leichte Scherung.
-      const wanted = Math.max(-SKEW_MAX, Math.min(SKEW_MAX, delta * SKEW_PER_PIXEL));
-      skew += (wanted - skew) * 0.14;
-      if (Math.abs(skew) < 0.01) skew = 0;
-
-      content.style.transform =
-        `translate3d(0, ${-current.toFixed(2)}px, 0) skewY(${skew.toFixed(3)}deg)`;
+      // Nur verschieben. Die Räumlichkeit macht useDepthScroll pro Block —
+      // eine globale Scherung sieht auf jeder zweiten Seite gleich aus.
+      content.style.transform = `translate3d(0, ${-current.toFixed(2)}px, 0)`;
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);

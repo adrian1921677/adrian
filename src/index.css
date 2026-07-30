@@ -216,6 +216,73 @@
     animation: signal-travel 7.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
 
+  /* --- Glühwürmchen-Zeiger ------------------------------------------- */
+  :root.firefly,
+  :root.firefly * {
+    cursor: none;
+  }
+
+  .firefly-dot,
+  .firefly-glow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform;
+  }
+
+  .firefly-dot {
+    height: 5px;
+    width: 5px;
+    border-radius: 999px;
+    background: #f4e9cd;
+    box-shadow:
+      0 0 6px rgba(232, 213, 166, 0.9),
+      0 0 18px rgba(232, 213, 166, 0.5);
+    transition: height 220ms ease, width 220ms ease, opacity 260ms ease;
+  }
+
+  .firefly-dot[data-mode='text'] {
+    height: 20px;
+    width: 2px;
+    border-radius: 1px;
+  }
+
+  .firefly-glow {
+    height: 30px;
+    width: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(168, 192, 141, 0.45);
+    background: radial-gradient(circle, rgba(232, 213, 166, 0.13) 0%, transparent 70%);
+    animation: firefly-breathe 3.4s ease-in-out infinite;
+    transition:
+      height 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 320ms ease,
+      opacity 260ms ease;
+  }
+
+  .firefly-glow[data-mode='aktiv'] {
+    height: 54px;
+    width: 54px;
+    border-color: rgba(232, 213, 166, 0.75);
+    background: radial-gradient(circle, rgba(232, 213, 166, 0.16) 0%, transparent 70%);
+  }
+
+  .firefly-glow[data-mode='text'] {
+    height: 26px;
+    width: 26px;
+    border-color: rgba(168, 192, 141, 0.25);
+  }
+
+  .firefly-glow.firefly-press {
+    height: 20px;
+    width: 20px;
+    border-color: rgba(232, 213, 166, 0.9);
+  }
+
   .egg-toast {
     position: fixed;
     bottom: 1.75rem;
@@ -325,6 +392,16 @@
   }
 }
 
+@keyframes firefly-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 16px rgba(232, 213, 166, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(232, 213, 166, 0.22);
+  }
+}
+
 @keyframes egg-toast-in {
   from {
     opacity: 0;
@@ -387,6 +464,16 @@
 
   .project-title {
     transition: none !important;
+    transform: none !important;
+  }
+
+  .firefly-glow {
+    animation: none !important;
+  }
+
+  /* Tiefenstaffelung beim Scrollen bleibt aus — useDepthScroll steigt aus,
+     die Blöcke behalten dadurch ihre unveränderte Lage. */
+  [data-depth] {
     transform: none !important;
   }
 }
