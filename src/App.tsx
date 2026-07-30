@@ -26,8 +26,8 @@ export default function App() {
 
   return (
     <>
-      {/* Bewusst außerhalb von #smooth-content: dessen Transform würde sonst
-          zum Bezugsrahmen für alles Fixierte und die Navigation mitscrollen. */}
+      {/* Alles Fixierte steht außerhalb des Inhalts — übersichtlicher, und
+          es bleibt unabhängig davon, was im Inhalt transformiert wird. */}
       <Cursor />
       <SideNav soundEnabled={soundEnabled} onToggleSound={toggleSound} />
       <DepthGauge />
