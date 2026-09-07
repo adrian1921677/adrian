@@ -9,9 +9,24 @@ type Project = {
   stack: string[];
   href: string;
   host: string;
+  /** If set, project is a download — shows a download button instead of a site link. */
+  downloadHref?: string;
+  downloadLabel?: string;
 };
 
 const PROJECTS: Project[] = [
+  {
+    year: '2026',
+    title: 'Signal Desk',
+    role: 'Desktop-Tool · Windows',
+    blurb:
+      'Echtzeit-Signalhilfe für Trader: Marktticks werden zu Kerzen, technische Muster automatisch erkannt, und ein LLM prüft jedes Signal gegen die aktuelle Nachrichtenlage. Das Dashboard zeigt bestätigte Signale in dem Moment, in dem sie entstehen — inklusive Stop, Target und historischer Trefferquote. Signal Desk platziert keine Trades, es liefert Entscheidungshilfen.',
+    stack: ['Next.js', 'Electron', 'Supabase', 'LLM', 'Binance'],
+    href: '#',
+    host: 'Windows .exe',
+    downloadHref: '/downloads/SignalDesk-Setup-0.1.0.exe',
+    downloadLabel: 'Download für Windows',
+  },
   {
     year: '2026',
     title: 'Mieter +Plus',
@@ -39,12 +54,9 @@ export default function Work() {
     <Section id="werkstatt" eyebrow="// ls -la ~/projekte" title="Werkstatt" index="03 / 05">
       <ol>
         {PROJECTS.map((project, index) => (
-          <li key={project.href}>
+          <li key={project.title}>
             <Reveal>
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noreferrer noopener"
+              <div
                 className="group relative block border-t border-white/10 pb-14 pt-8 transition-colors duration-500 hover:border-accent/40 sm:pb-16 sm:pt-10"
                 style={{ perspective: '900px' }}
               >
@@ -76,18 +88,52 @@ export default function Work() {
                     <p className="font-mono text-[0.7rem] leading-relaxed text-white/30">
                       {project.stack.join(' · ')}
                     </p>
-                    <p className="mt-3 inline-flex items-center gap-2 font-mono text-[0.7rem] text-accent/60">
-                      <span className="border-b border-accent/25 pb-0.5">{project.host}</span>
-                      <span
-                        aria-hidden="true"
-                        className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-1"
+
+                    {project.downloadHref ? (
+                      /* ── Download-Button ── */
+                      <a
+                        href={project.downloadHref}
+                        download
+                        className="mt-4 inline-flex items-center gap-2.5 rounded-md border border-accent/30 bg-accent/10 px-5 py-2.5 font-mono text-[0.75rem] text-accent transition-all duration-300 hover:border-accent/60 hover:bg-accent/20 hover:shadow-[0_0_20px_rgba(var(--color-accent-rgb,99,240,190),0.15)]"
                       >
-                        ↗
-                      </span>
-                    </p>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="shrink-0"
+                        >
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        {project.downloadLabel ?? 'Download'}
+                      </a>
+                    ) : (
+                      /* ── Externer Website-Link ── */
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="mt-3 inline-flex items-center gap-2 font-mono text-[0.7rem] text-accent/60"
+                      >
+                        <span className="border-b border-accent/25 pb-0.5">{project.host}</span>
+                        <span
+                          aria-hidden="true"
+                          className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-1"
+                        >
+                          ↗
+                        </span>
+                      </a>
+                    )}
                   </div>
                 </div>
-              </a>
+              </div>
             </Reveal>
           </li>
         ))}
