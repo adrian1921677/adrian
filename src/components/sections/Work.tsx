@@ -24,7 +24,7 @@ const PROJECTS: Project[] = [
     stack: ['Next.js', 'Electron', 'Supabase', 'LLM', 'Binance'],
     href: '#',
     host: 'Windows .exe',
-    downloadHref: '/downloads/SignalDesk-Setup-0.1.0.exe',
+    downloadHref: 'https://github.com/adrian1921677/adrian/releases/download/v0.1.0/SignalDesk-Setup-0.1.0.exe',
     downloadLabel: 'Download für Windows',
   },
   {
