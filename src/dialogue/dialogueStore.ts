@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { TopicId } from '../data/nodes';
-import type { Line } from '../data/types';
+import type { GameId, Line } from '../data/types';
 
 /**
  * UI-only dialogue state. Written by the director, read by the overlay.
@@ -27,6 +27,9 @@ export interface DialogueState {
   userText: { text: string; id: number } | null;
   cvOpen: boolean;
   setCvOpen: (open: boolean) => void;
+  /** Game box: closed, the menu, or a running game. */
+  games: 'menu' | GameId | null;
+  setGames: (games: 'menu' | GameId | null) => void;
 }
 
 export const useDialogue = create<DialogueState>()((set) => ({
@@ -40,4 +43,6 @@ export const useDialogue = create<DialogueState>()((set) => ({
   userText: null,
   cvOpen: false,
   setCvOpen: (cvOpen) => set({ cvOpen }),
+  games: null,
+  setGames: (games) => set({ games }),
 }));

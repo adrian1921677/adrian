@@ -14,7 +14,7 @@
  *  - Character is ~1.1 units tall.
  */
 
-export const TOPIC_IDS = ['about', 'journey', 'work', 'skills', 'education', 'contact'] as const;
+export const TOPIC_IDS = ['about', 'journey', 'work', 'skills', 'education', 'hobbies', 'contact'] as const;
 export type TopicId = (typeof TOPIC_IDS)[number];
 
 export const NODES = {
@@ -66,6 +66,7 @@ export const TOPIC_NODES: Record<TopicId, { hotspot: string; spot: string }> = {
   work: { hotspot: 'Hotspot_Work', spot: 'Spot_Work' }, // desk + monitor + chair + lamp
   skills: { hotspot: 'Hotspot_Skills', spot: 'Spot_Skills' }, // pinboard + dresser with trophies
   education: { hotspot: 'Hotspot_Education', spot: 'Spot_Education' }, // bookshelf
+  hobbies: { hotspot: 'Hotspot_Hobbies', spot: 'Spot_Hobbies' }, // beanbag + controller + handheld, football, volleyball, drone
   contact: { hotspot: 'Hotspot_Contact', spot: 'Spot_Contact' }, // side table + retro phone + paper planes
 };
 

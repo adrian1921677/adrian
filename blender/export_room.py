@@ -1,4 +1,4 @@
-"""
+﻿"""
 Export the Momo room for the website.
 
     blender -b blender/momo_room_source.blend -P blender/export_room.py
@@ -11,7 +11,7 @@ What it does:
   1. Makes sure Desk_Screen has 0..1 UVs (the site draws a canvas onto it).
   2. Merges every Hotspot_* cluster into one multi-material mesh per hotspot and
      all remaining static room meshes into Room_Static (fewer draw calls).
-     Char_* parts, Desk_Screen and all empties stay separate — the website
+     Char_* parts, Desk_Screen and all empties stay separate â€” the website
      finds them by name (see src/data/nodes.ts).
   3. Exports the MomoRoom collection to public/models/room.glb.
   4. Verifies every node name the website needs is present.
@@ -28,8 +28,8 @@ REQUIRED = [
     "Char_Root", "Char_Body", "Char_BubbleAnchor", "Char_EyeL", "Char_EyeR", "Char_Mouth",
     "Char_ArmL", "Char_ArmR", "Char_FootL", "Char_FootR", "Char_Antenna", "Char_AntennaTip",
     "Char_EarL", "Char_EarR", "Desk_Screen", "Light_Lamp", "Light_Window",
-    "Hotspot_About", "Hotspot_Work", "Hotspot_Skills", "Hotspot_Education", "Hotspot_Journey", "Hotspot_Contact",
-    "Spot_Home", "Spot_About", "Spot_Work", "Spot_Skills", "Spot_Education", "Spot_Journey", "Spot_Contact",
+    "Hotspot_About", "Hotspot_Work", "Hotspot_Skills", "Hotspot_Education", "Hotspot_Journey", "Hotspot_Hobbies", "Hotspot_Contact",
+    "Spot_Home", "Spot_About", "Spot_Work", "Spot_Skills", "Spot_Education", "Spot_Journey", "Spot_Hobbies", "Spot_Contact",
 ]
 
 

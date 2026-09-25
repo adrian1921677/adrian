@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
-import { FileText, Volume2, VolumeX } from 'lucide-react';
+import { FileText, Gamepad2, Volume2, VolumeX } from 'lucide-react';
 import { babble } from '../audio/babble';
 import { TOPIC_IDS } from '../data/nodes';
 import { useDialogue } from '../dialogue/dialogueStore';
 import { useAppStore } from '../state/store';
+import { NeonWordmark } from './NeonWordmark';
 
 export function TopBar() {
   const muted = useAppStore((s) => s.muted);
   const visitedCount = useAppStore((s) => s.visited.length);
   const setCvOpen = useDialogue((s) => s.setCvOpen);
+  const setGames = useDialogue((s) => s.setGames);
 
   const toggleSound = () => {
     const next = !muted;
@@ -25,7 +27,8 @@ export function TopBar() {
       transition={{ duration: 0.5, delay: 0.4 }}
     >
       <div className="select-none">
-        <h1 className="wordmark">Adrian Abdullahu</h1>
+        <h1 className="sr-only">Adrian Abdullahu</h1>
+        <NeonWordmark />
         <p className="wordmark-sub">
           Portfolio
           {visitedCount > 0 && (
@@ -50,6 +53,19 @@ export function TopBar() {
           ) : (
             <Volume2 size={20} strokeWidth={2.2} aria-hidden="true" />
           )}
+        </button>
+        <button
+          type="button"
+          className="glass-btn"
+          onClick={() => {
+            babble.tick();
+            setGames('menu');
+          }}
+          aria-label="Momos Spielekiste"
+          aria-haspopup="dialog"
+          title="Spielekiste"
+        >
+          <Gamepad2 size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
         <button
           type="button"

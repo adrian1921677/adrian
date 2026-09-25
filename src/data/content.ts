@@ -253,6 +253,33 @@ export const TOPICS: Topic[] = [
         ],
       },
       {
+        kind: 'card',
+        text: 'Projekt 4: dieses Zimmer hier! Und mich. Adrian hat alles in Blender gebaut – per Python-Skript. 🥹',
+        mood: 'proud',
+        gesture: 'celebrate',
+        card: {
+          period: '2026 · 3D im Browser',
+          title: 'Momos Zimmer',
+          org: 'Blender · three.js · React Three Fiber',
+          bullets: [
+            'Jedes Möbelstück per Code modelliert, 378 Einzelteile zu 32 Meshes zusammengefasst',
+            'Ich bestehe aus 23 Teilen – Mund, Augen, Antenne einzeln animiert',
+            'Meine Stimme? Kein Audiofile, sondern live mit Web Audio erzeugt',
+          ],
+        },
+      },
+      {
+        kind: 'gallery',
+        text: 'Willst du hinter die Kulissen? Hier ein paar Blicke direkt aus Blender:',
+        mood: 'excited',
+        images: [
+          { src: '/making-of/clay.jpg', caption: 'Clay-Render: nur Form, noch keine Farbe' },
+          { src: '/making-of/wire.jpg', caption: 'Wireframe: jede Kante im Zimmer' },
+          { src: '/making-of/parts.jpg', caption: 'Ich, in Einzelteilen. Keine Sorge, tut nicht weh.' },
+          { src: '/making-of/final.jpg', caption: 'Fertig gerendert: hallo!' },
+        ],
+      },
+      {
         kind: 'say',
         text: 'Psst: Immobilien +Plus liegt schon auf der Werkbank. Du hast es nicht von mir. 🤫',
         mood: 'shy',
@@ -353,6 +380,47 @@ export const TOPICS: Topic[] = [
         kind: 'say',
         text: 'Sein Geheimnis? Jedes Projekt ist ein neues Tutorial. Er hört einfach nie auf.',
         mood: 'proud',
+      },
+    ],
+  },
+  {
+    id: 'hobbies',
+    question: 'Was macht Adrian in seiner Freizeit?',
+    title: 'Freizeit',
+    icon: 'Gamepad2',
+    keywords: [
+      'freizeit', 'hobby', 'hobbies', 'hobbys', 'zocken', 'zockt', 'gaming', 'konsole', 'fussball',
+      'volleyball', 'sport', 'drohne', 'wochenende', 'feierabend', 'interessen', 'free time',
+    ],
+    reaction: 'Freizeit? Ab zum Sitzsack – das ist quasi Adrians zweites Büro!',
+    lines: [
+      {
+        kind: 'say',
+        text: 'Controller, Handheld, Sitzsack. Wenn Adrian nicht arbeitet, wird hier gezockt. Und zwar viel. 🎮',
+        mood: 'excited',
+      },
+      {
+        kind: 'say',
+        text: 'Der Fußball da? Wird wirklich benutzt! Adrian spielt oft und gern – ich bin leider zu rund zum Mitspielen.',
+        mood: 'happy',
+        gesture: 'jump',
+      },
+      {
+        kind: 'say',
+        text: 'Und Volleyball! Baggern, pritschen, schmettern. Ich übe noch mit den Ohren.',
+        mood: 'shy',
+      },
+      {
+        kind: 'say',
+        text: 'Die Drohne? Technik ist für Adrian nicht nur Job. Er muss alles aufschrauben und verstehen.',
+        mood: 'thinking',
+        gesture: 'think',
+      },
+      {
+        kind: 'games',
+        text: 'Apropos zocken: Ich hab ein paar Minispiele versteckt. Traust du dich?',
+        mood: 'excited',
+        gesture: 'celebrate',
       },
     ],
   },

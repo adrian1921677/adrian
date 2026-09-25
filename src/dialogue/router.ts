@@ -1,7 +1,7 @@
 import { TOPICS } from '../data/content';
 import type { TopicId } from '../data/nodes';
 
-export type SmallTalk = 'greeting' | 'name' | 'thanks' | 'joke';
+export type SmallTalk = 'greeting' | 'name' | 'thanks' | 'joke' | 'games';
 export type Route =
   | { type: 'topic'; id: TopicId }
   | { type: 'smalltalk'; intent: SmallTalk }
@@ -21,7 +21,10 @@ export function normalise(input: string): string {
 }
 
 const GREETING_WORDS = ['hallo', 'hi', 'hey', 'servus', 'moin', 'hello', 'huhu', 'gruezi', 'ciao'];
-const PHRASES: Record<Exclude<SmallTalk, 'greeting'>, string[]> = {
+/** Only used when no topic matched ("Spielt Adrian Fußball?" belongs to hobbies). */
+const GAME_WORDS = ['spiel', 'minigame', 'mini game', 'langweilig', 'play', 'game'];
+
+const PHRASES: Record<Exclude<SmallTalk, 'greeting' | 'games'>, string[]> = {
   name: ['wie heisst du', 'wer bist du', 'dein name', 'wie ist dein name', 'what is your name', 'who are you'],
   thanks: ['danke', 'thx', 'merci', 'thanks', 'thank you', 'vielen dank'],
   joke: ['witz', 'joke', 'lustig', 'bring mich zum lachen'],
@@ -70,5 +73,6 @@ export function route(input: string): Route {
   // …except a greeting followed by a real question ("Hi, was hat Adrian gemacht?").
   if (isGreeting && !topic) return { type: 'smalltalk', intent: 'greeting' };
   if (topic) return { type: 'topic', id: topic };
+  if (GAME_WORDS.some((w) => startsWord(padded, w))) return { type: 'smalltalk', intent: 'games' };
   return { type: 'unknown' };
 }

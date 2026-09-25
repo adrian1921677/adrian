@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
-import type { ContactLink, Line, Skill, TimelineCard } from '../data/types';
+import { useState } from 'react';
+import { babble } from '../audio/babble';
+import type { ContactLink, GalleryImage, Line, Skill, TimelineCard } from '../data/types';
+import { useDialogue } from '../dialogue/dialogueStore';
+import { GAMES } from '../games/registry';
 import { iconFor } from './icons';
+import { Lightbox } from './Lightbox';
 
 /**
  * Extra content under a line (card / skills / contact). It is laid out from the
@@ -15,9 +20,80 @@ export function LineExtras({ line, shown }: { line: Line; shown: boolean }) {
       return <SkillBars skills={line.skills} shown={shown} />;
     case 'contact':
       return <ContactButtons links={line.links} shown={shown} />;
+    case 'gallery':
+      return <Gallery images={line.images} shown={shown} />;
+    case 'games':
+      return <GameButtons shown={shown} />;
     default:
       return null;
   }
+}
+
+function Gallery({ images, shown }: { images: GalleryImage[]; shown: boolean }) {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <>
+      <motion.ul
+        className="mt-3 grid grid-cols-2 gap-2.5"
+        initial="hidden"
+        animate={shown ? 'shown' : 'hidden'}
+        variants={reveal}
+        transition={{ staggerChildren: 0.08, delayChildren: 0.05 }}
+        aria-hidden={!shown}
+      >
+        {images.map((img, i) => (
+          <motion.li key={img.src} variants={reveal}>
+            <button
+              type="button"
+              className="gallery-thumb"
+              tabIndex={shown ? 0 : -1}
+              onClick={() => {
+                babble.tick();
+                setOpen(i);
+              }}
+              aria-label={`Bild vergrößern: ${img.caption}`}
+            >
+              <img src={img.src} alt="" loading="lazy" draggable={false} />
+            </button>
+          </motion.li>
+        ))}
+      </motion.ul>
+      {open !== null && <Lightbox images={images} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />}
+    </>
+  );
+}
+
+function GameButtons({ shown }: { shown: boolean }) {
+  const setGames = useDialogue((s) => s.setGames);
+  return (
+    <motion.ul
+      className="mt-3 grid gap-2"
+      initial="hidden"
+      animate={shown ? 'shown' : 'hidden'}
+      variants={reveal}
+      transition={{ staggerChildren: 0.07, delayChildren: 0.05 }}
+      aria-hidden={!shown}
+    >
+      {GAMES.map((g) => (
+        <motion.li key={g.id} variants={reveal}>
+          <button
+            type="button"
+            className="contact-btn w-full justify-start"
+            tabIndex={shown ? 0 : -1}
+            onClick={() => {
+              babble.tick();
+              setGames(g.id);
+            }}
+          >
+            <span aria-hidden="true" className="text-lg leading-none">
+              {g.emoji}
+            </span>
+            <span>{g.title}</span>
+          </button>
+        </motion.li>
+      ))}
+    </motion.ul>
+  );
 }
 
 const reveal = {

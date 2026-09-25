@@ -34,11 +34,20 @@ interface LineBase {
   gesture?: CharacterAction;
 }
 
+export interface GalleryImage {
+  src: string;
+  caption: string;
+}
+
+export type GameId = 'keepy' | 'fix' | 'memory';
+
 export type Line =
   | (LineBase & { kind: 'say' })
   | (LineBase & { kind: 'card'; card: TimelineCard })
   | (LineBase & { kind: 'skills'; skills: Skill[] })
-  | (LineBase & { kind: 'contact'; links: ContactLink[] });
+  | (LineBase & { kind: 'contact'; links: ContactLink[] })
+  | (LineBase & { kind: 'gallery'; images: GalleryImage[] })
+  | (LineBase & { kind: 'games' });
 
 export interface Topic {
   id: TopicId;

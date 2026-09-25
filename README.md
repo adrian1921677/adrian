@@ -20,7 +20,9 @@ npm run dev
 | Ablauf des Gesprächs (Intro, Themen, Laufen, Pieksen) | `src/dialogue/director.ts` |
 | Momos Murmel-Stimme (Web Audio, keine Dateien) | `src/audio/babble.ts` |
 | 3D: Laufen, Blinzeln, Mund, Kamera, Licht | `src/scene/` |
-| Sprechblase, Fragen, Eingabefeld, Lebenslauf als Text | `src/ui/` |
+| Sprechblase, Fragen, Eingabefeld, Lebenslauf als Text, Neon-Schriftzug | `src/ui/` |
+| Spielekiste: Keepy-Uppy, Entstörung!, Zimmer-Memory (Rekorde im localStorage) | `src/games/` |
+| Making-of-Bilder (Clay, Wireframe, Momo in Einzelteilen) | `public/making-of/`, erzeugt mit `blender/making_of.py` |
 
 Neues Thema? In `content.ts` eintragen. Braucht es eigene Möbel, kommt es in
 `TOPIC_IDS` / `TOPIC_NODES` in `nodes.ts` und bekommt im Blender-File ein

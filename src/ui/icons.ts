@@ -1,6 +1,7 @@
 import {
   Briefcase,
   Download,
+  Gamepad2,
   Globe,
   GraduationCap,
   Linkedin,
@@ -15,6 +16,7 @@ import type { LucideIcon } from 'lucide-react';
 const ICONS: Record<string, LucideIcon> = {
   Briefcase,
   Download,
+  Gamepad2,
   Globe,
   GraduationCap,
   Linkedin,

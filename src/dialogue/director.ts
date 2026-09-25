@@ -21,6 +21,7 @@ import { useAppStore } from '../state/store';
 import type { AppState, CharacterAction } from '../state/store';
 import { useDialogue } from './dialogueStore';
 import type { DialogueMode } from './dialogueStore';
+import { isModalOpen } from '../ui/ComicModal';
 import { route } from './router';
 
 /**
@@ -198,6 +199,10 @@ class Director {
           break;
         case 'thanks':
           await this.speak({ ...THANKS_REPLY, gesture: THANKS_REPLY.gesture ?? 'celebrate' }, signal, opts);
+          break;
+        case 'games':
+          await this.speak(say('Oh ja, zocken! Such dir was aus. 🎮', 'excited', 'celebrate'), signal, opts);
+          useDialogue.getState().setGames('menu');
           break;
         case 'joke': {
           const joke = this.pick(JOKES);
@@ -552,7 +557,8 @@ class Director {
 
   private onKey = (e: KeyboardEvent) => {
     if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (app().phase !== 'running' || useDialogue.getState().cvOpen) return;
+    const d = useDialogue.getState();
+    if (app().phase !== 'running' || d.cvOpen || d.games || isModalOpen()) return;
     this.onInteract();
 
     const target = e.target instanceof HTMLElement ? e.target : null;
@@ -565,7 +571,7 @@ class Director {
       if (!e.repeat) this.advance();
       return;
     }
-    if (/^[1-6]$/.test(e.key) && useDialogue.getState().mode === 'choosing') {
+    if (/^[1-9]$/.test(e.key) && useDialogue.getState().mode === 'choosing') {
       const topic = TOPICS[Number(e.key) - 1];
       if (topic) {
         e.preventDefault();

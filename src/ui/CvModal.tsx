@@ -198,6 +198,25 @@ function CvLine({ line }: { line: Line }) {
           </ul>
         </div>
       );
+    case 'gallery':
+      return (
+        <div>
+          {text}
+          <ul className="mt-2 grid grid-cols-2 gap-2">
+            {line.images.map((img) => (
+              <li key={img.src}>
+                <figure>
+                  <img src={img.src} alt={img.caption} loading="lazy" className="w-full rounded-xl border-2 border-ink" />
+                  <figcaption className="mt-1 text-[13px] leading-snug text-ink-muted">{img.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    case 'games':
+      // The game box lives behind the gamepad button; the text CV just keeps the line.
+      return text;
     default:
       return text;
   }

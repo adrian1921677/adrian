@@ -5,6 +5,7 @@ import { director } from '../dialogue/director';
 import { useDialogue } from '../dialogue/dialogueStore';
 import { bubbleAnchor } from '../state/signals';
 import { useAppStore } from '../state/store';
+import { GameBox } from '../games/GameBox';
 import { AskInput } from './AskInput';
 import { CvModal } from './CvModal';
 import { uiLayout } from './layout';
@@ -53,6 +54,7 @@ export function Overlay() {
       )}
       <LiveRegion />
       <CvModal />
+      <GameBox />
     </div>
   );
 }
