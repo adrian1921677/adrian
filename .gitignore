@@ -30,3 +30,6 @@ pnpm-debug.log*
 
 # Große Downloads
 public/downloads/*.exe
+
+# Blender backups
+*.blend1

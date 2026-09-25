@@ -1,51 +1,52 @@
-# adrian — kleine kreative Ecke
+# adrian — Momos Zimmer
 
-Persönliches Portfolio von Adrian Abdullahu. React + Vite + TypeScript + Tailwind CSS v4.
+Adrians Portfolio als kleines 3D-Zimmer. Momo wohnt darin, murmelt in
+Sprechblasen und läuft zu den Möbeln, während er Adrians Werdegang erzählt.
+
+React 18 · TypeScript · Vite · Tailwind · three.js / React Three Fiber · Framer Motion.
+Das Zimmer und Momo sind in Blender gebaut.
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Was hier drinsteckt
+## Wo was steckt
 
-- **Zerfallender Schriftzug** — der Name im Hero zersetzt sich über ~42 Sekunden in
-  Einzelbuchstaben. Fährt der Zeiger darüber, ziehen sich die Buchstaben an
-  Wurzeln wieder zusammen. Licht fällt von oben ein, mit dem Zerfall sinkt die
-  Deckkraft. Siehe `src/components/DecayingName.tsx`.
-- **Spotlight-Reveal** — ein Radialverlauf wird pro Frame auf ein Canvas gezeichnet,
-  als Data-URL exportiert und als CSS-Maske über den Showreel gelegt. Das Canvas
-  läuft bewusst weit unter Viewport-Auflösung, damit `toDataURL()` billig bleibt.
-- **Waldrauschen** — 90-Sekunden-Schleife, aus einer langen Aufnahme verlustfrei auf
-  MPEG-Frame-Grenzen geschnitten. Zwei Durchläufe überlappen sich um vier Sekunden,
-  dadurch ist die Schnittkante nicht hörbar (`src/audio/engine.ts`).
-- **Gedämpftes Scrollen** — das Dokument scrollt normal, der Inhalt hängt verzögert
-  hinterher und schert sich leicht mit der Geschwindigkeit.
-- **Ranke als Navigation** — links am Rand, füllt sich mit dem Scrollfortschritt,
-  der aktive Abschnitt treibt Blätter.
-- **3D ohne Bibliothek** — Neigung zum Zeiger, ein drehbarer Würfel aus sechs `div`s
-  und reiner CSS-Perspektive.
+| Was | Wo |
+| --- | --- |
+| Alles, was Momo sagt (Lebenslauf, Projekte, Skills, Kontakt, Witze) | `src/data/content.ts` |
+| Namen der Objekte im 3D-Modell, die der Code braucht | `src/data/nodes.ts` |
+| Ablauf des Gesprächs (Intro, Themen, Laufen, Pieksen) | `src/dialogue/director.ts` |
+| Momos Murmel-Stimme (Web Audio, keine Dateien) | `src/audio/babble.ts` |
+| 3D: Laufen, Blinzeln, Mund, Kamera, Licht | `src/scene/` |
+| Sprechblase, Fragen, Eingabefeld, Lebenslauf als Text, Neon-Schriftzug | `src/ui/` |
+| Spielekiste: Keepy-Uppy, Entstörung!, Zimmer-Memory (Rekorde im localStorage) | `src/games/` |
+| Making-of-Bilder (Clay, Wireframe, Momo in Einzelteilen) | `public/making-of/`, erzeugt mit `blender/making_of.py` |
 
-## Gestaltungssystem
+Neues Thema? In `content.ts` eintragen. Braucht es eigene Möbel, kommt es in
+`TOPIC_IDS` / `TOPIC_NODES` in `nodes.ts` und bekommt im Blender-File ein
+`Hotspot_…`-Empty plus einen `Spot_…`-Punkt am Boden.
 
-Zwei Farben neben Weiß, definiert in `src/index.css`:
+## Das Zimmer bearbeiten
 
-| Token | Wert | Wofür |
-| --- | --- | --- |
-| `accent` | `#e8d5a6` | der einzige UI-Akzent: Zahlen, Links, Hervorhebungen |
-| `organic` | `#a8c08d` | alles Gewachsene: Ranke, Wurzeln, Leitung, Würfelkanten |
+`blender/momo_room_source.blend` ist die bearbeitbare Quelle. Alle Möbel sind
+dort noch einzelne Objekte. Nach Änderungen exportieren:
 
-Weiß gibt es in vier Stufen — `white`, `white/70`, `white/45`, `white/30` — Linien
-liegen bei `white/10`. Monospace hat genau eine Größe (`0.7rem`).
+```bash
+blender -b blender/momo_room_source.blend -P blender/export_room.py
+```
+
+Das Skript fasst die Möbel pro Hotspot zusammen (weniger Draw-Calls), exportiert
+nach `public/models/room.glb` und bricht ab, falls ein Objekt fehlt, das die
+Website braucht. `Char_*`-Teile, `Desk_Screen` und alle Empties bleiben
+einzeln, weil der Code sie per Name animiert. Momos Teile haben keine
+Rotation und keine Skalierung. Die Form steckt im Mesh, damit der Code
+direkt skalieren und drehen kann.
 
 ## Barrierefreiheit
 
-Bei `prefers-reduced-motion: reduce` sind gedämpftes Scrollen, 3D-Neigung,
-Signalimpuls und die Einblendungen abgeschaltet. Die Seite bleibt vollständig
-bedienbar.
-
-## Schriften
-
-`Inter` und `Instrument Serif` kommen von Google Fonts. `Helvetica Neue Roman` ist
-lizenzpflichtig und deshalb nicht enthalten — siehe `public/fonts/README.md`. Ohne
-die Dateien greift automatisch der Fallback-Stack.
+- Oben rechts gibt es den ganzen Lebenslauf als normalen Text (für eilige Recruiter und Screenreader).
+- Jede Zeile von Momo landet zusätzlich in einer `aria-live`-Region.
+- Bedienung per Tastatur: Leertaste/Enter = weiter, 1–6 = Frage wählen, Esc = schließen.
+- Bei `prefers-reduced-motion` schweben die Blasen nicht und der Text tippt schneller.
