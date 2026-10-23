@@ -33,3 +33,10 @@ public/downloads/*.exe
 
 # Blender backups
 *.blend1
+
+# MemScope (tools/memscope)
+tools/memscope/.venv/
+tools/memscope/profile/
+tools/memscope/memscope-fehler.log
+__pycache__/
+.pytest_cache/
